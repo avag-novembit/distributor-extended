@@ -1,0 +1,1 @@
+Extend functionality of the "Distributor Adapted" plug-in.
