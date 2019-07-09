@@ -10,7 +10,7 @@ function setup() {
 		'init',
 		function () {
 			add_action( 'dt_meta_box_external_connection_details', __NAMESPACE__ . '\add_external_connection_details', 10, 1 );
-			add_filter( 'dt_before_setup_cpt', __NAMESPACE__ . '\add_taxonomy_to_cpt_args' );
+			add_filter( 'register_post_type_args', __NAMESPACE__ . '\add_taxonomy_to_cpt_args', 10, 2 );
 		}
 	);
 }
@@ -28,13 +28,16 @@ function add_external_connection_details( $post ) {
 /**
  * Add taxonomy to the connection custom post type arguments
  *
- * @param array $cpt_args
+ * @param array $args
+ * @param string $post_type
  *
  * @return array
  */
-function add_taxonomy_to_cpt_args( $cpt_args ) {
+function add_taxonomy_to_cpt_args( $args, $post_type ) {
 
-	$cpt_args['taxonomies'] = [ 'dt_ext_connection_group' ];
+	if ( $post_type == 'dt_ext_connection' ) {
+		$cpt_args['taxonomies'] = [ 'dt_ext_connection_group' ];
+	}
 
-	return $cpt_args;
+	return $args;
 }
